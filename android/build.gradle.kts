@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "earcam.android"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "earcam.viewer"
