@@ -1,5 +1,7 @@
 name: Build
 
+# Every push builds all packages as workflow artifacts.
+# Pushing a tag like v1.2.3 also publishes them as a GitHub release.
 on:
   push:
   pull_request:
@@ -20,11 +22,17 @@ jobs:
           distribution: temurin
           java-version: 25
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew :protocol:test :android:assembleDebug
+      - name: Build
+        run: |
+          args=()
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then args+=("-PappVersion=${GITHUB_REF_NAME#v}"); fi
+          ./gradlew "${args[@]}" :protocol:test :android:assembleDebug
+          mkdir out && cp android/build/outputs/apk/debug/*.apk out/hnd-earcam-android.apk
       - uses: actions/upload-artifact@v4
         with:
           name: hnd-earcam-android
-          path: android/build/outputs/apk/debug/*.apk
+          path: out/*
+          if-no-files-found: error
 
   desktop:
     strategy:
@@ -34,12 +42,18 @@ jobs:
           - os: ubuntu-latest
             task: packageDeb
             name: hnd-earcam-linux-deb
+            file: hnd-earcam-linux-amd64.deb
+            pattern: deb/*.deb
           - os: windows-latest
             task: packageMsi
             name: hnd-earcam-windows-msi
+            file: hnd-earcam-windows-x64.msi
+            pattern: msi/*.msi
           - os: macos-latest
             task: packageDmg
             name: hnd-earcam-macos-dmg
+            file: hnd-earcam-macos-arm64.dmg
+            pattern: dmg/*.dmg
     runs-on: ${{ matrix.os }}
     # The runners have an Android SDK. Hide it so the desktop build skips :android.
     env:
@@ -52,13 +66,33 @@ jobs:
           distribution: temurin
           java-version: 25
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew :desktop:${{ matrix.task }}
+      - name: Build
         shell: bash
+        run: |
+          args=()
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then args+=("-PappVersion=${GITHUB_REF_NAME#v}"); fi
+          ./gradlew "${args[@]}" :desktop:${{ matrix.task }}
+          mkdir out && cp desktop/build/compose/binaries/main/${{ matrix.pattern }} out/${{ matrix.file }}
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.name }}
-          path: |
-            desktop/build/compose/binaries/main/deb/*.deb
-            desktop/build/compose/binaries/main/msi/*.msi
-            desktop/build/compose/binaries/main/dmg/*.dmg
+          path: out/*
           if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [android, desktop]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --repo "$GITHUB_REPOSITORY" --title "HND earcam ${GITHUB_REF_NAME#v}" --generate-notes

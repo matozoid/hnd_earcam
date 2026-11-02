@@ -9,6 +9,30 @@ system-settings access. None of that is needed to show a video stream.
 - **protocol**: plain Kotlin/JVM library with all camera logic. Both apps use it.
 - **simulator**: fake cameras for testing without hardware.
 
+## Download
+
+From the [latest release](https://github.com/matozoid/hnd_earcam/releases/latest):
+
+| Platform | File |
+|---|---|
+| Debian / Ubuntu | [hnd-earcam-linux-amd64.deb](https://github.com/matozoid/hnd_earcam/releases/latest/download/hnd-earcam-linux-amd64.deb) (`sudo apt install ./hnd-earcam-linux-amd64.deb`) |
+| Windows | [hnd-earcam-windows-x64.msi](https://github.com/matozoid/hnd_earcam/releases/latest/download/hnd-earcam-windows-x64.msi) |
+| macOS (Apple Silicon) | [hnd-earcam-macos-arm64.dmg](https://github.com/matozoid/hnd_earcam/releases/latest/download/hnd-earcam-macos-arm64.dmg) |
+| Android 10+ | [hnd-earcam-android.apk](https://github.com/matozoid/hnd_earcam/releases/latest/download/hnd-earcam-android.apk) (allow "install unknown apps") |
+
+The packages are not signed, so Windows and macOS warn on first start (macOS: right-click the
+app, *Open*). Builds of every push to `main` are under
+[Actions](https://github.com/matozoid/hnd_earcam/actions/workflows/build.yml?query=branch%3Amain+is%3Asuccess)
+→ *Artifacts* (GitHub login needed).
+
+### Making a release
+
+Push a version tag. CI builds everything with that version and publishes the release:
+
+```sh
+git tag v1.0.0 && git push origin v1.0.0
+```
+
 ## Use
 
 1. Turn on the camera and connect to its Wi-Fi network.

@@ -17,6 +17,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.swing)
 }
 
+// Release builds pass -PappVersion=1.2.3 (taken from the git tag).
+val appVersion = providers.gradleProperty("appVersion").getOrElse("1.0.0")
+
 compose.desktop {
     application {
         mainClass = "earcam.desktop.MainKt"
@@ -28,7 +31,7 @@ compose.desktop {
             // packageMsi (Windows), packageDmg (macOS). jpackage can't cross-build.
             targetFormats(TargetFormat.Deb, TargetFormat.Rpm, TargetFormat.AppImage, TargetFormat.Msi, TargetFormat.Dmg)
             packageName = "hnd-earcam"
-            packageVersion = "1.0.0"
+            packageVersion = appVersion
             description = "Viewer for HND Wi-Fi earcams"
             vendor = "hnd-earcam"
             // Only the JDK modules the app needs, for a smaller bundled runtime.
