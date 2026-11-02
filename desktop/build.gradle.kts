@@ -7,7 +7,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }
 
 dependencies {
@@ -20,6 +20,8 @@ dependencies {
 compose.desktop {
     application {
         mainClass = "earcam.desktop.MainKt"
+        // Skia loads a native library. JDK 24+ warns about that unless it is allowed.
+        jvmArgs("--enable-native-access=ALL-UNNAMED")
         // `./gradlew :desktop:run --args=127.0.0.2` to use a fixed camera address.
         nativeDistributions {
             // Build the package for the OS you are on: packageDeb / packageRpm (Linux),

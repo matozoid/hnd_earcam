@@ -26,7 +26,7 @@ Desktop shortcuts: `F11` fullscreen, `Esc` leave fullscreen. Snapshots go to `~/
 
 ## Build
 
-Needs JDK 21 (the Gradle wrapper downloads Gradle).
+Needs JDK 25 (the Gradle wrapper downloads Gradle).
 
 ```sh
 ./gradlew :protocol:test                 # protocol tests against the fake cameras
