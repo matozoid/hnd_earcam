@@ -1,6 +1,6 @@
-# EarCam
+# HND earcam
 
-Clean viewers for cheap Wi-Fi in-ear (ear-wax) cameras. This replaces the vendor app
+Clean viewers for the HND earcam and similar cheap Wi-Fi in-ear (ear-wax) cameras. This replaces the vendor app
 `com.xiaozhen.beauty.hnd` ("HND"). The vendor app asks for location, Bluetooth, storage and
 system-settings access. None of that is needed to show a video stream.
 
@@ -12,13 +12,13 @@ system-settings access. None of that is needed to show a video stream.
 ## Use
 
 1. Turn on the camera and connect to its Wi-Fi network.
-2. Start EarCam. It finds the camera on its own: it takes the Wi-Fi gateway as the camera
+2. Start HND earcam. It finds the camera on its own: it takes the Wi-Fi gateway as the camera
    address (falling back to `192.168.169.1`) and tries all three known protocols at once.
    The first one that delivers a picture wins.
 3. If that fails, type the camera IP in the *Camera IP* field.
 
-Desktop shortcuts: `F11` fullscreen, `Esc` leave fullscreen. Snapshots go to `~/Pictures/EarCam`
-(Android: `Pictures/EarCam`). They are the JPEG exactly as the camera sent it, without rotation.
+Desktop shortcuts: `F11` fullscreen, `Esc` leave fullscreen. Snapshots go to `~/Pictures/HND earcam`
+(Android: `Pictures/HND earcam`). They are the JPEG exactly as the camera sent it, without rotation.
 
 *Auto-rotate* turns the picture using the camera's tilt sensor, like the vendor app.
 *Rotate* and *Mirror* are manual and saved between runs.

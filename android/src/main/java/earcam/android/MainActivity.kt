@@ -238,17 +238,17 @@ class MainActivity : ComponentActivity() {
     private fun snapshot() {
         val frame = latest.value ?: return toast("No picture yet")
         lifecycleScope.launch(Dispatchers.IO) {
-            val name = "earcam-" + SimpleDateFormat("yyyyMMdd-HHmmss-SSS", Locale.US).format(Date()) + ".jpg"
+            val name = "hnd-earcam-" + SimpleDateFormat("yyyyMMdd-HHmmss-SSS", Locale.US).format(Date()) + ".jpg"
             val values = ContentValues().apply {
                 put(MediaStore.Images.Media.DISPLAY_NAME, name)
                 put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/EarCam")
+                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/HND earcam")
             }
             val msg = try {
                 val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
                     ?: error("MediaStore refused the file")
                 contentResolver.openOutputStream(uri)?.use { it.write(frame.jpeg) }
-                "Saved to Pictures/EarCam"
+                "Saved to Pictures/HND earcam"
             } catch (e: Exception) {
                 "Could not save: ${e.message}"
             }

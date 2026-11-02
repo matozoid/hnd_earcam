@@ -1,4 +1,4 @@
-rootProject.name = "earcam"
+rootProject.name = "hnd-earcam"
 
 pluginManagement {
     repositories {

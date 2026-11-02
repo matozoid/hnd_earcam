@@ -114,7 +114,7 @@ class ViewerState(private val scope: CoroutineScope, commandLineAddress: String?
                 }
 
                 override fun onWarning(message: String) {
-                    System.err.println("earcam: $message")
+                    System.err.println("hnd-earcam: $message")
                 }
             },
         )
@@ -158,15 +158,15 @@ class ViewerState(private val scope: CoroutineScope, commandLineAddress: String?
         prefs.putBoolean("circle", circle)
     }
 
-    /** Saves the current frame, as sent by the camera, to ~/Pictures/EarCam. */
+    /** Saves the current frame, as sent by the camera, to ~/Pictures/HND earcam. */
     fun snapshot() {
         val frame = latest.value ?: return flash("No picture yet")
         scope.launch(Dispatchers.IO) {
             val msg = try {
                 val home = File(System.getProperty("user.home"))
                 val pictures = File(home, "Pictures").takeIf { it.isDirectory } ?: home
-                val dir = File(pictures, "EarCam").apply { mkdirs() }
-                val name = "earcam-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss-SSS")) + ".jpg"
+                val dir = File(pictures, "HND earcam").apply { mkdirs() }
+                val name = "hnd-earcam-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss-SSS")) + ".jpg"
                 File(dir, name).writeBytes(frame.jpeg)
                 "Saved ${File(dir, name)}"
             } catch (e: Exception) {

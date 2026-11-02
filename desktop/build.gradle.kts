@@ -25,23 +25,24 @@ compose.desktop {
             // Build the package for the OS you are on: packageDeb / packageRpm (Linux),
             // packageMsi (Windows), packageDmg (macOS). jpackage can't cross-build.
             targetFormats(TargetFormat.Deb, TargetFormat.Rpm, TargetFormat.AppImage, TargetFormat.Msi, TargetFormat.Dmg)
-            packageName = "earcam"
+            packageName = "hnd-earcam"
             packageVersion = "1.0.0"
-            description = "Viewer for Wi-Fi in-ear cameras"
-            vendor = "earcam"
+            description = "Viewer for HND Wi-Fi earcams"
+            vendor = "hnd-earcam"
             // Only the JDK modules the app needs, for a smaller bundled runtime.
             modules("java.prefs", "jdk.unsupported")
             linux {
-                packageName = "earcam"
+                packageName = "hnd-earcam"
                 menuGroup = "Graphics"
                 iconFile = project.file("icons/earcam.png")
             }
             windows {
-                menuGroup = "EarCam"
+                menuGroup = "HND earcam"
                 perUserInstall = true
                 upgradeUuid = "5d3c1a3e-8f7b-4c62-9b0e-6a2f1c9d4e71"
             }
             macOS {
+                packageName = "HND earcam"
                 bundleID = "earcam.desktop"
             }
         }

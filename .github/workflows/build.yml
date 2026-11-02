@@ -23,7 +23,7 @@ jobs:
       - run: ./gradlew :protocol:test :android:assembleDebug
       - uses: actions/upload-artifact@v4
         with:
-          name: earcam-android
+          name: hnd-earcam-android
           path: android/build/outputs/apk/debug/*.apk
 
   desktop:
@@ -33,13 +33,13 @@ jobs:
         include:
           - os: ubuntu-latest
             task: packageDeb
-            name: earcam-linux-deb
+            name: hnd-earcam-linux-deb
           - os: windows-latest
             task: packageMsi
-            name: earcam-windows-msi
+            name: hnd-earcam-windows-msi
           - os: macos-latest
             task: packageDmg
-            name: earcam-macos-dmg
+            name: hnd-earcam-macos-dmg
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4

@@ -80,7 +80,7 @@ fun main(args: Array<String>) = application {
             exitApplication()
         },
         state = windowState,
-        title = "EarCam",
+        title = "HND earcam",
         onPreviewKeyEvent = { e ->
             // Shortcuts work unless the address field has focus (it consumes typed keys first).
             if (e.type != KeyEventType.KeyDown) return@Window false
