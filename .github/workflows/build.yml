@@ -41,6 +41,10 @@ jobs:
             task: packageDmg
             name: hnd-earcam-macos-dmg
     runs-on: ${{ matrix.os }}
+    # The runners have an Android SDK. Hide it so the desktop build skips :android.
+    env:
+      ANDROID_HOME: ""
+      ANDROID_SDK_ROOT: ""
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
