@@ -27,7 +27,8 @@ app, *Open*). Builds of every push to `main` are under
 
 ### Making a release
 
-Push a version tag. CI builds everything with that version and publishes the release:
+Push a version tag. CI builds everything with that version and publishes the release.
+The first number must be at least 1 (macOS rejects `0.x` versions):
 
 ```sh
 git tag v1.0.0 && git push origin v1.0.0

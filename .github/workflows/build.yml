@@ -73,6 +73,10 @@ jobs:
           if [[ "$GITHUB_REF" == refs/tags/v* ]]; then args+=("-PappVersion=${GITHUB_REF_NAME#v}"); fi
           ./gradlew "${args[@]}" :desktop:${{ matrix.task }}
           mkdir out && cp desktop/build/compose/binaries/main/${{ matrix.pattern }} out/${{ matrix.file }}
+      - name: Show jpackage logs
+        if: failure()
+        shell: bash
+        run: cat desktop/build/compose/logs/*/*.txt || true
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.name }}
